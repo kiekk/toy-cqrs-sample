@@ -24,7 +24,7 @@ public class ProductQueryController {
     }
 
     @GetMapping("/{id}")
-    public ProductItemResponse getProductById(@PathVariable Long id) {
+    public ProductItemResponse getProductById(@PathVariable(name = "id") Long id) {
         return productQueryService.getProduct(id);
     }
 

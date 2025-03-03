@@ -3,7 +3,7 @@ package com.cqrs.shyoon.product.controller.product;
 import com.cqrs.shyoon.product.entity.product.Product;
 import com.cqrs.shyoon.product.model.product.CreateProductRequest;
 import com.cqrs.shyoon.product.model.product.UpdateProductRequest;
-import com.cqrs.shyoon.product.repository.service.product.ProductCommandService;
+import com.cqrs.shyoon.product.service.product.ProductCommandService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +21,12 @@ public class ProductCommandController {
     }
 
     @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable Long id, @RequestBody @Valid UpdateProductRequest request) {
+    public Product updateProduct(@PathVariable(name = "id") Long id, @RequestBody @Valid UpdateProductRequest request) {
         return productCommandService.updateProduct(request.toProductEntity(id));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id) {
+    public void deleteProduct(@PathVariable(name = "id") Long id) {
         productCommandService.deleteProduct(id);
     }
 }

@@ -1,4 +1,4 @@
-package com.cqrs.shyoon.product.repository.service.product;
+package com.cqrs.shyoon.product.service.product;
 
 import com.cqrs.shyoon.product.entity.product.Product;
 

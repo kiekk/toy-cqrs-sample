@@ -23,4 +23,25 @@ public class Product {
         this.price = price;
     }
 
+    public static Product create(String name, int price) {
+        return Product.builder()
+                .name(name)
+                .price(price)
+                .build();
+    }
+
+    public static Product update(Long id, String name, int price) {
+        return Product.builder()
+                .id(id)
+                .name(name)
+                .price(price)
+                .build();
+    }
+
+    public static Product delete(Long id) {
+        return Product.builder()
+                .id(id)
+                .build();
+    }
+
 }
