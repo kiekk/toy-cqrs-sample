@@ -1,8 +1,8 @@
-package com.fastcampus.shyoon.product.service.product;
+package com.cqrs.shyoon.product.service.product;
 
-import com.fastcampus.shyoon.product.dto.product.response.ProductItemResponse;
-import com.fastcampus.shyoon.product.dto.product.response.ProductListResponse;
-import com.fastcampus.shyoon.product.entity.product.Product;
+import com.cqrs.shyoon.product.dto.product.response.ProductItemResponse;
+import com.cqrs.shyoon.product.dto.product.response.ProductListResponse;
+import com.cqrs.shyoon.product.entity.product.Product;
 
 import java.util.List;
 

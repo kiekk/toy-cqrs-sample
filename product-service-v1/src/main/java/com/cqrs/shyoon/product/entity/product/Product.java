@@ -1,4 +1,4 @@
-package com.fastcampus.shyoon.product.entity.product;
+package com.cqrs.shyoon.product.entity.product;
 
 import jakarta.persistence.*;
 import lombok.Builder;

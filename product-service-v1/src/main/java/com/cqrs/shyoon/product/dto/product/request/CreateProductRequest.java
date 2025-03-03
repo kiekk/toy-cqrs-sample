@@ -1,6 +1,6 @@
-package com.fastcampus.shyoon.product.dto.product.request;
+package com.cqrs.shyoon.product.dto.product.request;
 
-import com.fastcampus.shyoon.product.entity.product.Product;
+import com.cqrs.shyoon.product.entity.product.Product;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

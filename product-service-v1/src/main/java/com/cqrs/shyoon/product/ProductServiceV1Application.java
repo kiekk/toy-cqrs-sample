@@ -1,4 +1,4 @@
-package com.fastcampus.shyoon.product;
+package com.cqrs.shyoon.product;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

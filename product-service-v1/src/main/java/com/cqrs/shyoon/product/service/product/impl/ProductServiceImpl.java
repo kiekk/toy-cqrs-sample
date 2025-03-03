@@ -1,10 +1,10 @@
-package com.fastcampus.shyoon.product.service.product.impl;
+package com.cqrs.shyoon.product.service.product.impl;
 
-import com.fastcampus.shyoon.product.dto.product.response.ProductItemResponse;
-import com.fastcampus.shyoon.product.dto.product.response.ProductListResponse;
-import com.fastcampus.shyoon.product.entity.product.Product;
-import com.fastcampus.shyoon.product.repository.product.ProductRepository;
-import com.fastcampus.shyoon.product.service.product.ProductService;
+import com.cqrs.shyoon.product.dto.product.response.ProductItemResponse;
+import com.cqrs.shyoon.product.dto.product.response.ProductListResponse;
+import com.cqrs.shyoon.product.entity.product.Product;
+import com.cqrs.shyoon.product.repository.product.ProductRepository;
+import com.cqrs.shyoon.product.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,6 +1,6 @@
-package com.fastcampus.shyoon.product.dto.product.response;
+package com.cqrs.shyoon.product.dto.product.response;
 
-import com.fastcampus.shyoon.product.entity.product.Product;
+import com.cqrs.shyoon.product.entity.product.Product;
 import lombok.Getter;
 
 @Getter
