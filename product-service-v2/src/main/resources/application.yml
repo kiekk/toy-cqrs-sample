@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    write:
+      jdbc-url: jdbc:h2:mem:write_product_db
+      username: sa
+      password:
+      driver-class-name: org.h2.Driver
+    read:
+      jdbc-url: jdbc:h2:mem:read_product_db
+      username: sa
+      password:
+      driver-class-name: org.h2.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+  h2:
+    console:
+      enabled: true
