@@ -39,9 +39,20 @@ subprojects {
     }
 }
 
-project(':product-query-service') {
+project(':product-core') {
+    bootJar.enabled = false
+    jar.enabled = true
+
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+    }
+}
+
+project(':product-query-service') {
+    dependencies {
+        implementation project(':product-core')
         implementation 'org.springframework.boot:spring-boot-starter-validation'
         implementation 'org.springframework.boot:spring-boot-starter-web'
         compileOnly 'org.projectlombok:lombok'
@@ -54,7 +65,7 @@ project(':product-query-service') {
 
 project(':product-command-service') {
     dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation project(':product-core')
         implementation 'org.springframework.boot:spring-boot-starter-validation'
         implementation 'org.springframework.boot:spring-boot-starter-web'
         compileOnly 'org.projectlombok:lombok'
