@@ -1,6 +1,7 @@
 package com.cqrs.shyoon.product.config.dataSource;
 
 import jakarta.persistence.EntityManagerFactory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -23,6 +24,7 @@ import java.util.Map;
         entityManagerFactoryRef = "writeEntityManagerFactory",
         transactionManagerRef = "writeTransactionManager"
 )
+@RequiredArgsConstructor
 public class WriteDataSourceConfig {
 
     @Value("${spring.jpa.hibernate.ddl-auto}")
@@ -30,6 +32,12 @@ public class WriteDataSourceConfig {
 
     @Value("${spring.jpa.database-platform}")
     private String dialect;
+
+    @Value("${spring.jpa.properties.hibernate.show_sql}")
+    private String showSql;
+
+    @Value("${spring.jpa.properties.hibernate.format_sql}")
+    private String formatSql;
 
     @Primary
     @Bean(name = "writeDataSource")
@@ -45,7 +53,9 @@ public class WriteDataSourceConfig {
             @Qualifier("writeDataSource") DataSource dataSource) {
 
         Map<String, String> properties = Map.of("hibernate.hbm2ddl.auto", ddlAuto,
-                "hibernate.dialect", dialect);
+                "hibernate.dialect", dialect,
+                "hibernate.show_sql", showSql,
+                "hibernate.format_sql", formatSql);
 
         return builder
                 .dataSource(dataSource)

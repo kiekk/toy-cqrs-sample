@@ -1,6 +1,7 @@
 package com.cqrs.shyoon.product.config.dataSource;
 
 import jakarta.persistence.EntityManagerFactory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -22,6 +23,7 @@ import java.util.Map;
         entityManagerFactoryRef = "readEntityManagerFactory",
         transactionManagerRef = "readTransactionManager"
 )
+@RequiredArgsConstructor
 public class ReadDataSourceConfig {
 
     @Value("${spring.jpa.hibernate.ddl-auto}")
@@ -29,6 +31,12 @@ public class ReadDataSourceConfig {
 
     @Value("${spring.jpa.database-platform}")
     private String dialect;
+
+    @Value("${spring.jpa.properties.hibernate.show_sql}")
+    private String showSql;
+
+    @Value("${spring.jpa.properties.hibernate.format_sql}")
+    private String formatSql;
 
     @Bean(name = "readDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.read")
@@ -42,7 +50,9 @@ public class ReadDataSourceConfig {
             @Qualifier("readDataSource") DataSource dataSource) {
 
         Map<String, String> properties = Map.of("hibernate.hbm2ddl.auto", ddlAuto,
-                "hibernate.dialect", dialect);
+                "hibernate.dialect", dialect,
+                "hibernate.show_sql", showSql,
+                "hibernate.format_sql", formatSql);
 
         return builder
                 .dataSource(dataSource)
