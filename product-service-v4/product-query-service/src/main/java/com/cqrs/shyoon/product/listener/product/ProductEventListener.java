@@ -17,36 +17,36 @@ public class ProductEventListener {
     private final ProductQueryRepository productQueryRepository;
 
     @Transactional
-    @KafkaListener(topics = "product.product", groupId = "cdc-product-group")
+    @KafkaListener(topics = "cdc-product")
     public void processProductEvent(String event) {
 
         log.info("Getting event {}", event);
 
-        ProductEvent productEvent;
-        try {
-            productEvent = new ObjectMapper().readValue(event, ProductEvent.class);
-
-            log.info("parsed event: {}", productEvent);
-
-            switch (productEvent.getType()) {
-                case CREATE:
-                    productQueryRepository.save(productEvent.getProduct());
-                    break;
-
-                case UPDATE:
-                    productQueryRepository.save(productEvent.getProduct());
-                    break;
-
-                case DELETE:
-                    productQueryRepository.deleteById(productEvent.getProduct().getId());
-                    break;
-                default:
-                    break;
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        ProductEvent productEvent;
+//        try {
+//            productEvent = new ObjectMapper().readValue(event, ProductEvent.class);
+//
+//            log.info("parsed event: {}", productEvent);
+//
+//            switch (productEvent.getType()) {
+//                case CREATE:
+//                    productQueryRepository.save(productEvent.getProduct());
+//                    break;
+//
+//                case UPDATE:
+//                    productQueryRepository.save(productEvent.getProduct());
+//                    break;
+//
+//                case DELETE:
+//                    productQueryRepository.deleteById(productEvent.getProduct().getId());
+//                    break;
+//                default:
+//                    break;
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
 }
