@@ -1,0 +1,2 @@
+dependencies {}
+tasks.register("prepareKotlinBuildScriptModel"){}

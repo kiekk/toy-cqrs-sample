@@ -1,0 +1,2 @@
+rootProject.name = 'product-service-v4'
+include 'product-query-service', 'product-command-service', 'product-core'
