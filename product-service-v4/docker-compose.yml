@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  mysql:
+  mysql-master:
     image: mysql:8.0
-    container_name: mysql
+    container_name: mysql-master
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: product
@@ -18,10 +18,31 @@ services:
       --gtid-mode=ON
       --enforce-gtid-consistency=ON
     volumes:
-      - mysql-data:/var/lib/mysql
+      - mysql-master-data:/var/lib/mysql
+
+  mysql-slave:
+    image: mysql:8.0
+    container_name: mysql-slave
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: product
+      MYSQL_USER: product
+      MYSQL_PASSWORD: product
+    ports:
+      - "3307:3306"
+    command: >
+      --server-id=2
+      --log-bin=mysql-bin
+      --binlog-format=row
+      --gtid-mode=ON
+      --enforce-gtid-consistency=ON
+    depends_on:
+      - mysql-master
+    volumes:
+      - mysql-slave-data:/var/lib/mysql
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:latest
+    image: confluentinc/cp-zookeeper:7.8.0
     container_name: zookeeper
     restart: always
     environment:
@@ -30,7 +51,7 @@ services:
       - "2181:2181"
 
   kafka:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:7.8.0
     container_name: kafka
     environment:
       KAFKA_BROKER_ID: 1
@@ -45,22 +66,34 @@ services:
       - zookeeper
 
   kafka-connect:
-    image: debezium/connect:2.7.3.Final
+    image: confluentinc/cp-kafka-connect:7.8.0
     container_name: kafka-connect
     restart: always
     environment:
-      BOOTSTRAP_SERVERS: kafka:9092
-      GROUP_ID: "debezium-connect"
-      CONFIG_STORAGE_TOPIC: "connect-configs"
-      OFFSET_STORAGE_TOPIC: "connect-offsets"
-      STATUS_STORAGE_TOPIC: "connect-status"
       KAFKA_CONNECT_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      CONNECT_BOOTSTRAP_SERVERS: kafka:9092
+      CONNECT_REST_PORT: 8083
+      CONNECT_GROUP_ID: "confluentinc-connect"
+      CONNECT_CONFIG_STORAGE_TOPIC: "connect-configs"
+      CONNECT_OFFSET_STORAGE_TOPIC: "connect-offsets"
+      CONNECT_STATUS_STORAGE_TOPIC: "connect-status"
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_REST_ADVERTISED_HOST_NAME: "localhost"
+      CONNECT_LOG4J_ROOT_LOGLEVEL: INFO
     ports:
       - "8083:8083"
     depends_on:
       - kafka
     volumes:
       - kafka-connect-data:/kafka-connect
+#      - ./jars:/etc/kafka-connect/jars #jars파일들 volume을 통하여 사용
+      - ./jars:/usr/share/java/kafka-connect-jdbc
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
@@ -75,5 +108,6 @@ services:
       - kafka
 
 volumes:
-  mysql-data:
+  mysql-master-data:
+  mysql-slave-data:
   kafka-connect-data:

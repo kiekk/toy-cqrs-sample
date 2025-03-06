@@ -1,5 +1,6 @@
 package com.cqrs.shyoon.product.entity.product;
 
+import com.cqrs.shyoon.product.entity.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "product")
 @NoArgsConstructor
-public class Product {
+public class Product extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

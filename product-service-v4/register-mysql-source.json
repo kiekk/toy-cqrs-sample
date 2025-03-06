@@ -1,0 +1,14 @@
+{
+  "name": "mysql-source-connector",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "connection.url": "jdbc:mysql://mysql-master:3306/product",
+    "connection.user": "root",
+    "connection.password": "root",
+    "table.whitelist": "product.product",
+    "topic.prefix": "cdc_",
+    "tasks.max": "1",
+    "mode" : "incrementing",
+    "incrementing.column.name":"id"
+  }
+}

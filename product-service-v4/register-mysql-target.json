@@ -1,0 +1,20 @@
+{
+  "name": "mysql-target-connector",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+    "connection.url": "jdbc:mysql://mysql-slave:3306/product",
+    "connection.user": "root",
+    "connection.password": "root",
+    "auto.create": "true",
+    "auto.evolve": "true",
+    "delete.enabled": "false",
+    "tasks.max": "1",
+    "topics.regex": "cdc_(.*)",
+    "transforms": "RenameTable",
+    "transforms.RenameTable.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.RenameTable.regex": "cdc_(.*)",
+    "transforms.RenameTable.replacement": "$1",
+    "table.name.format": "${topic}"
+
+  }
+}
